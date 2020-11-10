@@ -13,7 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest // 별다른 설정 없이 이걸 사용하면 H2 데이터베이스를 자동으로 실행해 줌.
@@ -57,5 +61,31 @@ public class PostsRepositoryTest {
          * spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
          * Hibernate: create table posts (id bigint not null auto_increment, author varchar(255), content TEXT not null, title varchar(500) not null, primary key (id)) engine=InnoDB 이렇게 보임
          */
+    }
+
+    /**
+     * JPA Auditing 시간 관련 테스트 코드 메소드 추가
+     */
+
+    @Test
+    public void BaseTimeEntity_등록 () {
+        // given
+        LocalDateTime now = LocalDateTime.of(2020,2,1,0,0,0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        // when
+        List<Posts> postsList = postsRepository.findAll();
+
+        // then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>>>>>>>>> createDate="+posts.getCreateDate()+", modifiedDate="+posts.getModifiedDate());
+
+        Assertions.assertThat(posts.getCreateDate()).isAfter(now);
+        Assertions.assertThat(posts.getModifiedDate()).isAfter(now);
     }
 }

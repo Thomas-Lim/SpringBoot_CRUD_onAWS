@@ -1,12 +1,10 @@
 package com.aws.deploy.CRUDAWStest.web;
 
 import com.aws.deploy.CRUDAWStest.web.dto.PostsUpdateRequestDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.aws.deploy.CRUDAWStest.domain.posts.Posts;
 import com.aws.deploy.CRUDAWStest.domain.posts.PostsRepository;
 import com.aws.deploy.CRUDAWStest.web.dto.PostsSaveRequestDto;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,11 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.RequestEntity.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 //지금처럼 JPA 기능까지 한번에 테스트할 때는 아래 코드를 사용하면 된다.

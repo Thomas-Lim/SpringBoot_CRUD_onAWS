@@ -10,6 +10,7 @@
 package com.aws.deploy.CRUDAWStest.domain.posts;
 
 
+import com.aws.deploy.CRUDAWStest.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ import javax.persistence.*; // Entity와 연결되는 것 !!!!
  * 여기서는 생성자 대신에 @Builder를 통해 제공되는 빌더 클래스를 사용한다.
  */
 
-public class Posts {
+public class Posts extends BaseTimeEntity { // 엔티티 시간 후 변경된 부분.
     @Id // 해당 테이블의 PK 필드.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성규칙. 스프링 부터 2.0 부터 필수가 되었음.
     private Long id;
@@ -62,4 +63,8 @@ public class Posts {
         this.title = title;
         this.content = content;
     }
+
+//    public class Posts extends BaseTimeEntity {
+//
+//    }
 }
