@@ -5,28 +5,79 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-save').on('click', function () { // 등록 버튼의 id="btn-save"명
+        $('#btn-save').on('click', function () {
             _this.save();
         });
+
+        $('#btn-update').on('click', function () {
+            _this.update();
+        });
+
+        $('#btn-delete').on('click', function () {
+            _this.delete();
+        });
     },
+
     save : function () {
         var data = {
-            title: $('#title').val(), // 각 작성 폼의 id 명 매칭
+            title: $('#title').val(),
             author: $('#author').val(),
             content: $('#content').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: '/api/v1/posts',  // h2 DB에 저장되는 api 기능.
+            url: '/api/v1/posts',
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 등록되었습니다.');
-            window.location.href = '/';  // 글 등록이 성공하면 메인페이지로 이동함.
+            window.location.href = '/';
         }).fail(function (error) {
-                    alert(JSON.stringify(error));
+            alert(JSON.stringify(error));
+        });
+    },
+
+    // btn-update 부분
+    update : function () {
+        var data = {
+            title: $('#title').val(),
+            content: $('#content').val()
+        };
+
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'PUT',
+            //// PUT 메소드는 REST 규약에 맞게 설정되었다.
+            // REST에서는 CRUD는 다음과 같이 HTTP Method에 매핑된다.
+            // C : Post, R : Get, U : Put, D: Delete
+            url: '/api/v1/posts/'+id,
+            dataType: 'json',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function() {
+            alert('글이 수정되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+
+    delete : function () {
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/v1/posts/'+id,
+            dataType: 'json',
+            contentType:'application/json; charset=utf-8'
+        }).done(function() {
+            alert('글이 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
         });
     }
 
