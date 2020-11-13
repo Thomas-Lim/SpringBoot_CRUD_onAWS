@@ -2,10 +2,14 @@ package com.aws.deploy.CRUDAWStest.web;
 
 
 // import org.junit.jupiter.api.Test; 이걸로 해주면 오류남
+import com.aws.deploy.CRUDAWStest.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -16,13 +20,17 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class) // 테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자 실행시킴. 여기선 그래서 SpringRunner 실행시킴.
 // 즉, 스프링 부트 테스트와 JUnit 사이에 연결자 역할을 함.
-@WebMvcTest(controllers = HelloController.class) // 컨트롤러 사용시만 선언
-
+@WebMvcTest(controllers = HelloController.class, // 컨트롤러 사용시만 선언
+        excludeFilters = { // 스캔대상에서 SecurityConfig를 제거
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
 public class HelloControllerTest {
 
     @Autowired // 스프링이 관리하는 빈(Bean)을 주입 받음. 이어주는 역할
     private MockMvc mvc; // 웹 API를 테스트할 때 사용. 스프링 MVC 테스트의 시작점.
 
+    @WithMockUser(roles="USER") // 가짜로 인증된 사용자 생성
     @Test
     public void hello가_리턴된다() throws Exception { // 테스트 구문이므로 한글로 작성해도 무방
         String hello = "hello";
@@ -35,6 +43,7 @@ public class HelloControllerTest {
     /**
      * helloDto 롬복 기능 테스트 추가
      */
+    @WithMockUser(roles="USER") // 가짜로 인증된 사용자 생성
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";

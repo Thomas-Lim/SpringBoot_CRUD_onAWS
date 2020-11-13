@@ -9,7 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableJpaAuditing // JPA Auditing 시간관련 활성화
+//@EnableJpaAuditing // JPA Auditing 시간관련 활성화
+
+/**
+ * 테스트 코드 실행을위해 해당 기능 제거
+ * // EnableJpaAuditing이 @SpringBootApplication과 함께 있다보니 @WebMvcTest에서도 스캔하게 되었다.
+ * // 그래서 이를 방지하기 위해 @EnableJpaAuditing과 @SpringBootApplication을 분리한다.
+ *
+ * 이것은 config.JapConfig를 생성해 @EnableJpaAudiㅇting을 추가하는 것으로 해결한다.
+ */
 @SpringBootApplication
 public class CrudawStestApplication {
 
