@@ -18,17 +18,13 @@ cache:   # 그레이들 통해 의존성을 받게 되면 이를 해당 디렉�
 script: "./gradlew clean build"
 
 before_deploy:     # 디플로이 명령어가 실행되기 전해 수행. Jar는 인식 못하므로 zip으로 압축
-  - zip -r crud-springboot2-webservice * # 현재 위치의 모든 파일을 해당 이름으로 압축. * 은 내 프로젝트 이름
-  - mkdir -p deploy # deploy라는 디렉토리를 Travis CI가 실행중이 위치에 생성
-  - mv crud-springboot2-webservice.zip deploy/crud-springboot2-webservice.zip
-
-#  - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성
-#  - cp scripts/*.sh before-deploy/
-#  - cp appspec.yml before-deploy/
-#  - cp build/libs/*.jar before-deploy/
-#  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동후 전체 압축
-#  - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동후 deploy 디렉토리 생성
-#  - mv before-deploy/before-deploy.zip deploy/freelec-springboot2-webservice.zip # deploy로 zip파일 이동
+  - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동후 전체 압축
+  - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동후 deploy 디렉토리 생성 # deploy라는 디렉토리를 Travis CI가 실행중이 위치에 생성
+  - mv before-deploy/before-deploy.zip deploy/crud-springboot2-webservice.zip # deploy로 zip파일 이동
 
 deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위들을 선언.
   - provider: s3
