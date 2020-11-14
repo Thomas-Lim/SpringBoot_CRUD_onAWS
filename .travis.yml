@@ -3,7 +3,7 @@ jdk:
     - openjdk8
 
 before_install:  # 모든 사용자에게 접근을 풀어줌 (퍼미션 드나이 해결)
-    - chomod +x gradlew
+    - chmod +x gradlew
 
 branches: # 깃허브 브랜치 푸시 지점 설정
   only:
