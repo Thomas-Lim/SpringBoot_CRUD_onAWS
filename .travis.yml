@@ -30,7 +30,7 @@ before_deploy:     # 디플로이 명령어가 실행되기 전해 수행. Jar�
   - mv before-deploy/before-deploy.zip deploy/crud-springboot2-webservice.zip # deploy로 zip파일 이동
 
 deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위들을 선언.
-  - provider: s3
+  - provider: s3 //
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
     bucket: crud-springboot-build # S3 버킷
