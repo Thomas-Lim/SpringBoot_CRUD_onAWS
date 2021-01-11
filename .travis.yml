@@ -1,6 +1,6 @@
 language: java
 jdk:
-    - openjdk8
+   - openjdk8
 
 before_install:  # 모든 사용자에게 접근을 풀어줌 (퍼미션 드나이 해결)
     - chmod +x gradlew
